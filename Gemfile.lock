@@ -146,7 +146,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
-  devise (~> 4.1.1)
+  devise
   devise-i18n
   font-awesome-rails
   jquery-rails
