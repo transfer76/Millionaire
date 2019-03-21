@@ -5,7 +5,7 @@ FactoryGirl.define do
     answer3 {"#{rand(2001)}"}
     answer4 {"#{rand(2001)}"}
 
-    sequence(:test) { |n| "В каком году была косм. одиссея #{n}?" }
+    sequence(:text) { |n| "В каком году была косм. одиссея #{n}?" }
 
     sequence(:level) { |n| n % 15 }
   end
