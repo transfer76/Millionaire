@@ -132,6 +132,20 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def use_help(help_type)
+    case help_type
+    when :audience_help
+
+      unless audience_help_used
+        toggle!(:audience_help_used)
+        current_game_question.add_audience_help
+        return true
+      end
+    end
+
+    false
+  end  
+
   # Метод take_money! записывает юзеру игровую сумму на счет и завершает игру,
   def take_money!
     # Из законченной или неначатой игры нечего брать
@@ -155,11 +169,17 @@ class Game < ActiveRecord::Base
       # TODO: дорогой ученик! Если TIME_LIMIT в будущем изменится, статусы
       # старых, уже сыгранных игр могут измениться. Подумайте как это исправить!
       # Ответ найдете в файле настроек вашего тестового окружения.
-      (finished_at - created_at) > TIME_LIMIT ? :timeout : :fail
-    elsif current_level > Question::QUESTION_LEVELS.max
-      :won
-    else
-      :money
+       if (finished_at - created_at) <= TIME_LIMIT
+         :fail
+       else
+         :timeout
+       end
+     else
+       if current_level > Question::QUESTION_LEVELS.max
+         :won
+        else
+          :money
+       end
     end
   end
 

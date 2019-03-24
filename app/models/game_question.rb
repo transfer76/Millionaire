@@ -27,6 +27,8 @@ class GameQuestion < ActiveRecord::Base
   # них — целое число от 1 до 4.
   validates :a, :b, :c, :d, inclusion: {in: 1..4}
 
+  serialize :help_hash, Hash
+
   # Основные методы для доступа к данным в шаблонах и контроллерах:
 
   # Метод variants возвращает хэш с ключами a..d и значениями — тектом ответов:
@@ -63,4 +65,14 @@ class GameQuestion < ActiveRecord::Base
   def correct_answer
     variants[correct_answer_key]
   end
+
+  def add_audience_help
+    self.help_hash[:audience_help] = {
+      'a' => rand(100),
+      'b' => rand(100),
+      'c' => rand(100),
+      'd' => rand(100)
+    }
+    save
+  end  
 end
