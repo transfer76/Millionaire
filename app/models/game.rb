@@ -134,17 +134,28 @@ class Game < ActiveRecord::Base
 
   def use_help(help_type)
     case help_type
+    when :fifty_fifty
+      unless fifty_fifty_used
+        toggle!(:fifty_fifty_used)
+        current_game_question.add_fifty_fifty
+        return true
+      end
     when :audience_help
-
       unless audience_help_used
         toggle!(:audience_help_used)
         current_game_question.add_audience_help
         return true
       end
+    when :friend_call
+      unless friend_call_used
+        toggle!(:friend_call_used)
+        current_game_question.add_friend_call
+        return true
+      end
     end
 
     false
-  end  
+  end
 
   # Метод take_money! записывает юзеру игровую сумму на счет и завершает игру,
   def take_money!
@@ -166,9 +177,6 @@ class Game < ActiveRecord::Base
     return :in_progress unless finished?
 
     if is_failed
-      # TODO: дорогой ученик! Если TIME_LIMIT в будущем изменится, статусы
-      # старых, уже сыгранных игр могут измениться. Подумайте как это исправить!
-      # Ответ найдете в файле настроек вашего тестового окружения.
        if (finished_at - created_at) <= TIME_LIMIT
          :fail
        else
