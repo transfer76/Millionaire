@@ -3,14 +3,14 @@ require 'rails_helper'
 RSpec.describe 'users/index', type: :view do
   before(:each) do
     assign(:users, [
-      FactoryGirl.build_stubbed(:user, name: 'Вадик', balance: 5000),
-      FactoryGirl.build_stubbed(:user, name: 'Миша', balance: 3000),
+      FactoryGirl.build_stubbed(:users, name: 'Вадик', balance: 5000),
+      FactoryGirl.build_stubbed(:users, name: 'Миша', balance: 3000),
     ])
 
     render
   end
 
-  it 'renders plasyer names' do
+  it 'renders player names' do
     expect(rendered).to match 'Вадик'
     expect(rendered).to match 'Миша'
   end

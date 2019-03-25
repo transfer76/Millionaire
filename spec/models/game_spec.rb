@@ -3,8 +3,8 @@ require 'support/my_spec_helper'
 
 RSpec.describe Game, type: :model do
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:game_w_questions) { FactoryGirl.create(:game_with_questions, user: user) }
+  let(:users) { FactoryGirl.create(:users) }
+  let(:game_w_questions) { FactoryGirl.create(:game_with_questions, users: user) }
 
   context 'Game Factory' do
     it 'Game.create_game_for_user! new correct game' do
