@@ -41,8 +41,8 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.serve_static_files = true
-  config.assets.bebug = true
-  config.assets_host = 'http://localhost:3000'
+  config.assets.debug = true
+  config.asset_host = 'http://localhost:3000'
   config.static_cache_control = 'public, max-age=3600'
 end
 

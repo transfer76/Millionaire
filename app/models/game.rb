@@ -5,18 +5,15 @@ class Game < ActiveRecord::Base
   TIME_LIMIT = 35.minutes
 
   belongs_to :user
-
   has_many :game_questions, dependent: :destroy
 
+  scope :in_progress, -> { where(finished_at: nil) }
+
   validates :user, presence: true
-
-  validates :current_level, numericality: {only_integer: true}, allow_nil: false
-
+  validates :current_level, numericality: { only_integer: true }, allow_nil: false
   validates :prize, presence: true, numericality: {
     greater_than_or_equal_to: 0, less_than_or_equal_to: PRIZES.last
   }
-
-  scope :in_progress, -> { where(finished_at: nil) }
 
   def self.create_game_for_user!(user)
     transaction do
@@ -62,7 +59,7 @@ class Game < ActiveRecord::Base
     if current_game_question.answer_correct?(letter)
       self.current_level += 1
 
-      if current_level == Question::QUESTION_LEVELS.max + 1
+      if current_level == Question::QUESTION_LEVELS.max
         finish_game!(PRIZES[Question::QUESTION_LEVELS.max], false)
       else
         save!
@@ -110,17 +107,11 @@ class Game < ActiveRecord::Base
     return :in_progress unless finished?
 
     if is_failed
-       if (finished_at - created_at) <= TIME_LIMIT
-         :fail
-       else
-         :timeout
-       end
-     else
-       if current_level > Question::QUESTION_LEVELS.max
-         :won
-        else
-          :money
-       end
+      (finished_at - created_at) > TIME_LIMIT ? :timeout : :fail
+    elsif current_level > Question::QUESTION_LEVELS.max
+      :won
+    else
+      :money
     end
   end
 

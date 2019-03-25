@@ -22,6 +22,8 @@ RSpec.feature 'USER creates a game', type: :feature do
 
     click_link 'Новая игра'
 
+    expect(page).to have_current_path '/games/1'
+
     expect(page).to have_content('Когда была куликовская битва номер 0?')
 
     expect(page).to have_content('1380')
