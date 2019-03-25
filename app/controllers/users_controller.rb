@@ -1,11 +1,12 @@
-# Контроллер, отображающий список и профиль юзера
 class UsersController < ApplicationController
   before_action :set_user, only: [:show]
 
   def index
+    @users = User.all.order(balance: :desc)
   end
 
   def show
+    @games = @user.games.order(сreated_at: :desc)
   end
 
   private

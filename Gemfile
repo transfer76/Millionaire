@@ -7,22 +7,20 @@ gem 'devise-i18n'
 
 gem 'uglifier', '>= 1.3.0'
 
-gem 'jquery-rails'
-gem 'twitter-bootstrap-rails'
 gem 'font-awesome-rails'
+gem 'jquery-rails'
 gem 'russian'
+gem 'twitter-bootstrap-rails'
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'byebug'
-  gem 'rspec-rails', '~> 3.4'
   gem 'factory_girl_rails'
+  gem 'rspec-rails', '~> 3.4'
   gem 'shoulda-matchers'
+  gem 'sqlite3'
 end
 
 group :production do
-  # гем, улучшающий вывод логов на Heroku
-  # https://devcenter.heroku.com/articles/getting-started-with-rails4#heroku-gems
-  gem 'rails_12factor'
   gem 'pg'
+  gem 'rails_12factor'
 end
