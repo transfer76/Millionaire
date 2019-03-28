@@ -12,7 +12,7 @@ class Game < ActiveRecord::Base
   validates :user, presence: true
   validates :current_level, numericality: { only_integer: true }, allow_nil: false
   validates :prize, presence: true, numericality: {
-    greater_than_or_equal_to: 0, less_than_or_equal_to: PRIZES.last
+      greater_than_or_equal_to: 0, less_than_or_equal_to: PRIZES.last
   }
 
   def self.create_game_for_user!(user)
@@ -25,8 +25,9 @@ class Game < ActiveRecord::Base
         answers = [1, 2, 3, 4].shuffle
 
         game.game_questions.create!(
-          question: question,
-          a: answers.pop, b: answers.pop, c: answers.pop, d: answers.pop
+            question: question,
+            a: answers.pop, b: answers.pop,
+            c: answers.pop, d: answers.pop
         )
       end
 
@@ -72,6 +73,12 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def take_money!
+    return if time_out! || finished?
+
+    finish_game!(previous_level > -1 ? PRIZES[previous_level] : 0, false)
+  end
+
   def use_help(help_type)
     case help_type
     when :fifty_fifty
@@ -95,12 +102,6 @@ class Game < ActiveRecord::Base
     end
 
     false
-  end
-
-  def take_money!
-    return if time_out! || finished?
-
-    finish_game!(previous_level > -1 ? PRIZES[previous_level] : 0, false)
   end
 
   def status

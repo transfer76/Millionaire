@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :game do
 
-    association :users
+    association :user
 
     finished_at nil
     current_level 0

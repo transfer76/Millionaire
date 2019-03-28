@@ -13,10 +13,10 @@ class GameQuestion < ActiveRecord::Base
 
   def variants
     {
-      'a' => question.read_attribute("answer#{a}"),
-      'b' => question.read_attribute("answer#{b}"),
-      'c' => question.read_attribute("answer#{c}"),
-      'd' => question.read_attribute("answer#{d}")
+        'a' => question.read_attribute("answer#{a}"),
+        'b' => question.read_attribute("answer#{b}"),
+        'c' => question.read_attribute("answer#{c}"),
+        'd' => question.read_attribute("answer#{d}")
     }
   end
 

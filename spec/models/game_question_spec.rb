@@ -7,11 +7,11 @@ RSpec.describe GameQuestion, type: :model do
   context 'game status' do
 
     it 'correct .variants' do
-      expect(game_question.variants).to eq({'a' => game_question.question.answer2,
-                                            'b' => game_question.question.answer1,
-                                            'c' => game_question.question.answer4,
-                                            'd' => game_question.question.answer3,
-      })
+      expect(game_question.variants).to eq('a' => game_question.question.answer2,
+                                           'b' => game_question.question.answer1,
+                                           'c' => game_question.question.answer4,
+                                           'd' => game_question.question.answer3
+      )
     end
 
     it 'correct .answer_correct?' do
@@ -19,14 +19,16 @@ RSpec.describe GameQuestion, type: :model do
     end
   end
  
-  context 'users helpers' do
+  context 'user helpers' do
     it 'correct audience_help' do
       expect(game_question.help_hash).not_to include(:audience_help)
 
       game_question.add_audience_help
 
       expect(game_question.help_hash).to include(:audience_help)
-      expect(game_question.help_hash[:audience_help].keys).to contain_exactly('a', 'b', 'c', 'd')
+
+      ah = game_question.help_hash[:audience_help]
+      expect(ah.keys).to contain_exactly('a', 'b', 'c', 'd')
     end
   end
 end

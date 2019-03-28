@@ -1,10 +1,7 @@
 class GamesController < ApplicationController
   before_action :authenticate_user!
-
   before_action :goto_game_in_progress!, only: [:create]
-
   before_action :set_game, except: [:create]
-
   before_action :redirect_from_finished_game!, except: [:create]
 
   def show

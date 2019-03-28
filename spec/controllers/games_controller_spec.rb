@@ -2,9 +2,9 @@ require 'rails_helper'
 require 'support/my_spec_helper'
 
 RSpec.describe GamesController, type: :controller do
-  let(:users) { FactoryGirl.create(:users) }
-  let(:admin) { FactoryGirl.create(:users, is_admin: true) }
-  let(:game_w_questions) { FactoryGirl.create(:game_with_questions, users: user) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:admin) { FactoryGirl.create(:user, is_admin: true) }
+  let(:game_w_questions) { FactoryGirl.create(:game_with_questions, user: user) }
 
   context 'Anon' do
     it 'kick from #show' do
@@ -16,7 +16,7 @@ RSpec.describe GamesController, type: :controller do
     end
   end
 
-  context 'Usual users' do
+  context 'Usual user' do
     before(:each) do
       sign_in user
     end

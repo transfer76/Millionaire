@@ -3,11 +3,11 @@ require 'support/my_spec_helper'
 
 RSpec.describe Game, type: :model do
 
-  let(:users) { FactoryGirl.create(:users) }
-  let(:game_w_questions) { FactoryGirl.create(:game_with_questions, users: user) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:game_w_questions) { FactoryGirl.create(:game_with_questions, user: user) }
 
   context 'Game Factory' do
-    it 'Game.create_game_for_user! new correct game' do
+    it 'Game.create_game! new correct game' do
       generate_questions(60)
       
       game = nil
@@ -27,7 +27,7 @@ RSpec.describe Game, type: :model do
   end
 
   context 'game mechanics' do
-    it 'answer correct continues' do
+    it 'answer correct continues game' do
       level = game_w_questions.current_level
       q = game_w_questions.current_game_question
       expect(game_w_questions.status).to eq(:in_progress)

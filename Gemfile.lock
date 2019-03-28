@@ -188,7 +188,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara
-  devise
+  devise (~> 4.6.1)
   devise-i18n
   factory_girl_rails
   font-awesome-rails

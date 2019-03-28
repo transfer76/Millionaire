@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :users do
+  factory :user do
     name { "Жора_#{rand(999)}" }
 
     sequence(:email) { |n| "someguy_#{n}@exempl.com" }
