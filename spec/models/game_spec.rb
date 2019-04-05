@@ -94,4 +94,40 @@ RSpec.describe Game, type: :model do
       expect(game_w_questions.previous_level).to eq -1
     end
   end
+
+  context 'answer_current_question!' do
+    let(:q) { game_w_questions.current_game_question }
+    let(:incorrect_answer) { %w(a b c d).reject { |a| a == q.correct_answer_key }.sample }
+
+    it 'answer is correct' do
+      expect(game_w_questions.status).to eq(:in_progress)
+      expect(game_w_questions).not_to be_finished
+      expect { game_w_questions.answer_current_question!(q.correct_answer_key) }.to change(game_w_questions, :current_level).by(1)
+      expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_truthy
+    end
+
+    it 'answer is incorrect' do
+      expect(game_w_questions.answer_current_question!(incorrect_answer)).to be_falsey
+      expect { game_w_questions.answer_current_question!(incorrect_answer) }.not_to change(game_w_questions, :current_level)
+      expect(game_w_questions.status).to eq(:fail)
+      expect(game_w_questions).to be_finished
+    end
+
+    it 'answer is last' do
+      game_w_questions.current_level = Question::QUESTION_LEVELS.max
+      game_w_questions.answer_current_question!(q.correct_answer_key)
+
+      expect(game_w_questions).to be_finished
+      expect(game_w_questions.prize).to eq Game::PRIZES.last
+      expect(game_w_questions.status).to eq(:won)
+    end
+
+    it 'time is out' do
+      game_w_questions.created_at = 1.hour.ago
+
+      expect { game_w_questions.answer_current_question!(q.correct_answer_key) }.not_to change(game_w_questions, :current_level)
+      expect(game_w_questions.status).to eq(:timeout)
+      expect(game_w_questions).to be_finished
+    end
+  end
 end
