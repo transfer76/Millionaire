@@ -7,13 +7,13 @@ class Game < ActiveRecord::Base
   belongs_to :user
   has_many :game_questions, dependent: :destroy
 
-  scope :in_progress, -> { where(finished_at: nil) }
-
   validates :user, presence: true
   validates :current_level, numericality: { only_integer: true }, allow_nil: false
   validates :prize, presence: true, numericality: {
       greater_than_or_equal_to: 0, less_than_or_equal_to: PRIZES.last
   }
+
+  scope :in_progress, -> { where(finished_at: nil) }
 
   def self.create_game_for_user!(user)
     transaction do
@@ -60,7 +60,7 @@ class Game < ActiveRecord::Base
     if current_game_question.answer_correct?(letter)
       self.current_level += 1
 
-      if current_level == Question::QUESTION_LEVELS.max
+      if current_level == Question::QUESTION_LEVELS.max + 1
         finish_game!(PRIZES[Question::QUESTION_LEVELS.max], false)
       else
         save!

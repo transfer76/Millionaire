@@ -118,8 +118,8 @@ RSpec.describe Game, type: :model do
       game_w_questions.answer_current_question!(q.correct_answer_key)
 
       expect(game_w_questions).to be_finished
-      expect(game_w_questions.prize).to eq Game::PRIZES.last
       expect(game_w_questions.status).to eq(:won)
+      expect(game_w_questions.prize).to eq Game::PRIZES.last
     end
 
     it 'time is out' do
