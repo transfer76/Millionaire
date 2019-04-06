@@ -24,7 +24,7 @@ RSpec.describe GamesController, type: :controller do
     end
 
     it 'kick from #answer' do
-      put :answer, id: game_w_questions.id, letter: game_w_questions.current_game_question.correct_answer_key
+      put :answer, id: game_w_questions.id, letter: 'b'
 
       expect(response.status).not_to eq(200)
       expect(response).to redirect_to(new_user_session_path)
@@ -145,11 +145,10 @@ RSpec.describe GamesController, type: :controller do
       put :help, id: game_w_questions.id, help_type: :fifty_fifty
       game = assigns(:game)
 
-      expect(game.finished?).to be_falsey
-      expect(game.fifty_fifty_used).to be_truthy
       expect(game.current_game_question.help_hash[:fifty_fifty]).to be
       expect(game.current_game_question.help_hash[:fifty_fifty].count).to eq(2)
       expect(response).to redirect_to(game_path(game))
+      expect(flash[:info]).to be
     end
 
     it 'uses audience help' do
