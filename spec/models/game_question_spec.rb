@@ -57,7 +57,6 @@ RSpec.describe GameQuestion, type: :model do
       expect(game_question.help_hash).not_to include(:friend_call)
 
       game_question.add_friend_call
-      expect(game_question.help_hash).to include(:friend_call)
       expect(game_question.help_hash[:friend_call]).to be
 
       fc = game_question.help_hash[:friend_call]

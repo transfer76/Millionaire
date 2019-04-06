@@ -100,10 +100,10 @@ RSpec.describe Game, type: :model do
     let(:incorrect_answer) { %w(a b c d).reject { |a| a == q.correct_answer_key }.sample }
 
     it 'answer is correct' do
-      expect(game_w_questions.status).to eq(:in_progress)
-      expect(game_w_questions).not_to be_finished
       expect { game_w_questions.answer_current_question!(q.correct_answer_key) }.to change(game_w_questions, :current_level).by(1)
       expect(game_w_questions.answer_current_question!(q.correct_answer_key)).to be_truthy
+      expect(game_w_questions.status).to eq(:in_progress)
+      expect(game_w_questions).not_to be_finished
     end
 
     it 'answer is incorrect' do
