@@ -21,7 +21,7 @@ RSpec.describe 'users/show', type: :view do
     end
 
     it 'render game show page' do
-      stub_template 'users/show.html.erb' => 'User game goes here'
+      stub_template 'users/_game.html.erb' => 'User game goes here'
       render
 
       expect(rendered).to have_content 'User game goes here'
@@ -31,7 +31,7 @@ RSpec.describe 'users/show', type: :view do
   context 'user alien page' do
     before(:each) do
       assign(:user, FactoryGirl.build_stubbed(:user, name: 'Good Programmer'))
-      assign(:games, [FactoryGirl.build_stubbed(:game, id:1,created_at: Time.now, current_level: 2)])
+      assign(:games, [FactoryGirl.build_stubbed(:game, id: 1, created_at: Time.now, current_level: 2)])
 
       render
     end
@@ -57,7 +57,7 @@ RSpec.describe 'users/show', type: :view do
     end
 
     it 'render game show page' do
-      stub_template 'users/show.html.erb' => 'User game goes here'
+      stub_template 'users/_game.html.erb' => 'User game goes here'
       render
 
       expect(rendered).to have_content 'User game goes here'
