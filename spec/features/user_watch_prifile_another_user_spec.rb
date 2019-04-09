@@ -22,18 +22,18 @@ RSpec.feature 'USER watch profile of another user', type: :feature do
 
     click_link 'Вася'
 
-    expect(page).to have_current_path('/users/2')
+    expect(page).to have_current_path("/users/1")
     expect(page).not_to have_content('Сменить имя и пароль')
 
     expect(page).to have_content('15')
     expect(page).to have_content('Вася')
-    expect(page).to have_content('08 апреля, 09.00')
+    expect(page).to have_content('08 апр., 10:00')
     expect(page).to have_content('2')
     expect(page).to have_content('1 000 ₽')
 
     expect(page).to have_content('20')
     expect(page).to have_content('Вася')
-    expect(page).to have_content('08 апреля, 10.00')
+    expect(page).to have_content('08 апр., 09:00')
     expect(page).to have_content('10')
     expect(page).to have_content('30 000 ₽')
   end

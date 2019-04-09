@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @games = @user.games.order(сreated_at: :desc)
+    @games = @user.games.order(created_at: :desc)
   end
 
   private
